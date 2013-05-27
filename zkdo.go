@@ -47,8 +47,12 @@ func main() {
 	flag.Parse()
 
 	// if len(flag.Args()) < 1 {
-	// 	log.Fatalln("Command required")
+	//	log.Fatalln("Command required")
 	// }
+
+	if (len(flag.Args())) == 0 {
+		log.Fatalln("Must provide a command to run.")
+	}
 
 	if len(*lock) == 0 && len(*register) == 0 {
 		log.Fatalln("At least one of --lock or --register is required.")
@@ -84,9 +88,9 @@ func main() {
 			_, err = conn.Create(*lock, "", zk.EPHEMERAL, zk.WorldACL(zk.PERM_ALL))
 			if err != nil {
 				if *noblock {
-					log.Fatalf("Couldn't obtain lock: %v", *lock)					
+					log.Fatalf("Couldn't obtain lock: %v", *lock)
 				} else {
-					log.Printf("Couldn't obtain lock: %v", *lock)	
+					log.Printf("Couldn't obtain lock: %v", *lock)
 				}
 
 				if !zk.IsError(err, zk.ZNODEEXISTS) {
@@ -133,7 +137,7 @@ func main() {
 	cmd := exec.Command(flag.Args()[0], flag.Args()[1:]...)
 	cmd.Stdout = os.Stdout
   cmd.Stderr = os.Stderr
-	
+
 	err = cmd.Start()
 	if err != nil {
 		log.Fatalf("Error running subprocess: %v", err)
