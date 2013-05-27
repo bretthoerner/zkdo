@@ -3,6 +3,17 @@ zkdo
 
 Apache ZooKeeper meets *NIX
 
+---
+
+`zkdo` currently does two simple things:
+
+1. (Optionally) Wait on a lock in ZK before running a subcommand you provide.
+2. (Optionally) Register a string you provide as an ephemeral sequence node so you can discover your subprocess from elsewhere.
+
+It's mostly useful for bringing naive programs (especially ones you don't control) into your ZK-run deployment.
+
+---
+
 Example below (note that Redis is only used as an example, I see no reason why someone would want to do this):
 
 ```
