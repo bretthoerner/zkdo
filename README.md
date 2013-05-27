@@ -15,7 +15,7 @@ zkdo --lock=/locks/redis \
 2013/05/27 11:55:14 Connected to zk.
 2013/05/27 11:55:14 Created lock: /locks/redis
 2013/05/27 11:55:14 Registered at: /services/redis0000000002
-2013/05/27 11:55:14 Registered data: {"host":scumbag,"port":7777}
+2013/05/27 11:55:14 Registered data: {"host":"scumbag","port":7777}
 2013/05/27 11:55:14 Running command.
                 _._                                                  
            _.-``__ ''-._                                             
@@ -82,4 +82,4 @@ Now kill the original redis instance and check the second terminal:
 [27376] 27 May 11:59:18.218 * The server is now ready to accept connections on port 7777
 ```
 
-You can also leave out `--lock` if you just want to register multiple instances of your service for discovery/load-balancing/failover.
+One of `--lock` or `--register` is required, but both are also allowed at once. You can leave out `--lock` if you just want to register multiple instances of your service for discovery/load-balancing/failover. You can leave out `--register` if you don't need discovery at all.
