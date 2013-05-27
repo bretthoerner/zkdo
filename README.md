@@ -3,6 +3,8 @@ zkdo
 
 Apache ZooKeeper meets *NIX
 
+Example below (note that Redis is only used as an example, I see no reason why someone would want to do this):
+
 ```
 zkdo --lock=/locks/redis \
      --register=/services/redis \
@@ -79,3 +81,5 @@ Now kill the original redis instance and check the second terminal:
 [27376] 27 May 11:59:18.218 # Server started, Redis version 2.6.13
 [27376] 27 May 11:59:18.218 * The server is now ready to accept connections on port 7777
 ```
+
+You can also leave out `--lock` if you just want to register multiple instances of your service for discovery/load-balancing/failover.
