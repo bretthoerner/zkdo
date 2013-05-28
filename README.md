@@ -64,7 +64,7 @@ zkdo --lock=/locks/redis \
 
 ```
 
-Now kill the original redis instance and check the second terminal:
+Now kill the first instance of zkgo and check on the second instance, it will (once the first dies) take the lock and start its subprocess:
 ```
 2013/05/27 11:59:18 Lock changed, retrying obtain.
 2013/05/27 11:59:18 Created lock: /locks/redis
