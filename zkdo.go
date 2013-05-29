@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"os"
 	// "strings"
+	"syscall"
 )
 
 var (
@@ -103,18 +104,13 @@ func main() {
 				}
 
 				log.Println("Waiting on lock watch.")
-				for {
-					select {
-					case <-watch:
-						log.Println("Lock changed, retrying obtain.")
-						break
-					default:
-						time.Sleep(1 * 1e9)
-						continue
-					}
-					break
-				}
 
+				event := <-watch
+				if !event.Ok() {
+					log.Fatalf("Error while waiting on lock: %v", event.String())
+				} else {
+					log.Println("Lock changed, retrying obtain.")
+				}
 			} else {
 				log.Printf("Created lock: %v", *lock)
 				break
@@ -144,6 +140,19 @@ func main() {
 	} else {
 		log.Println("Running command.")
 	}
+
+	pid := cmd.Process.Pid
+
+	// watch for any ZK disconnects
+	go func() {
+		for {
+			event := <-session
+			if !event.Ok() {
+				syscall.Kill(pid, 9)
+				log.Fatalf("Problem with ZK event: %v", event)
+			}
+		}
+  }()
 
 	err = cmd.Wait()
 	if err != nil {
