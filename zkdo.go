@@ -5,9 +5,9 @@ import (
 	// "fmt"
 	zk "github.com/bretthoerner/gozk"
 	"log"
-	"time"
-	"os/exec"
 	"os"
+	"os/exec"
+	"time"
 	// "strings"
 	"syscall"
 )
@@ -132,7 +132,7 @@ func main() {
 	// run subprocess
 	cmd := exec.Command(flag.Args()[0], flag.Args()[1:]...)
 	cmd.Stdout = os.Stdout
-  cmd.Stderr = os.Stderr
+	cmd.Stderr = os.Stderr
 
 	err = cmd.Start()
 	if err != nil {
@@ -152,7 +152,7 @@ func main() {
 				log.Fatalf("Problem with ZK event: %v", event)
 			}
 		}
-  }()
+	}()
 
 	err = cmd.Wait()
 	if err != nil {
